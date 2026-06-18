@@ -118,7 +118,7 @@ function Calculator() {
 }
 
 function OfferColumn({
-  title, tone, items, entries, setEntries, total,
+  title, tone, items, entries, setEntries, total, vizTotal,
 }: {
   title: string;
   tone: "rising" | "dropping";
@@ -126,6 +126,7 @@ function OfferColumn({
   entries: Entry[];
   setEntries: React.Dispatch<React.SetStateAction<Entry[]>>;
   total: number;
+  vizTotal: number;
 }) {
   const [q, setQ] = useState("");
   const results = useMemo(() => {
