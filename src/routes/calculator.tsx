@@ -107,8 +107,8 @@ function Calculator() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          <OfferColumn title="Your Offer" tone="rising" items={data.items} entries={offerA} setEntries={setOfferA} total={totalA} />
-          <OfferColumn title="Their Offer" tone="dropping" items={data.items} entries={offerB} setEntries={setOfferB} total={totalB} />
+          <OfferColumn title="Your Offer" tone="rising" items={data.items} entries={offerA} setEntries={setOfferA} total={totalA} vizTotal={vizA} />
+          <OfferColumn title="Their Offer" tone="dropping" items={data.items} entries={offerB} setEntries={setOfferB} total={totalB} vizTotal={vizB} />
         </div>
       </div>
 
