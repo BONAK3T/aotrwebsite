@@ -78,11 +78,15 @@ function Calculator() {
             <div>
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Your offer</div>
               <div className="font-display text-2xl text-gold">{formatValue(totalA)}</div>
+              <div className="mt-0.5 text-xs text-muted-foreground">{formatViz(vizA)}</div>
             </div>
             <div className="text-center">
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Difference</div>
               <div className={`font-display text-2xl ${diff > 0 ? "text-rising" : diff < 0 ? "text-dropping" : "text-foreground"}`}>
                 {diff === 0 ? "Even" : `${diff > 0 ? "+" : ""}${formatValue(diff)}`}
+              </div>
+              <div className="mt-0.5 text-xs text-muted-foreground">
+                {vizDiff === 0 ? "—" : `${vizDiff > 0 ? "+" : ""}${formatViz(vizDiff)}`}
               </div>
               <div className="mt-1 text-[10px] uppercase tracking-widest text-muted-foreground">
                 {diff === 0 ? "Fair trade" : diff > 0 ? "You're overpaying" : "You profit"}
@@ -91,6 +95,7 @@ function Calculator() {
             <div className="text-right">
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Their offer</div>
               <div className="font-display text-2xl text-gold">{formatValue(totalB)}</div>
+              <div className="mt-0.5 text-xs text-muted-foreground">{formatViz(vizB)}</div>
             </div>
           </div>
           <button
