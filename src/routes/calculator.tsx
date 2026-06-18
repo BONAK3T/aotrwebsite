@@ -34,6 +34,11 @@ function formatValue(n: number) {
   return n.toLocaleString();
 }
 
+function formatViz(n: number) {
+  if (n === 0) return "—";
+  return `${n % 1 === 0 ? n : n.toFixed(2).replace(/\.?0+$/, "")}viz`;
+}
+
 function Calculator() {
   const { data } = useSuspenseQuery(itemsQuery);
   const [offerA, setOfferA] = useState<Entry[]>([]);
@@ -42,6 +47,10 @@ function Calculator() {
   const totalA = useMemo(() => offerA.reduce((s, e) => s + e.item.numericValue * e.qty, 0), [offerA]);
   const totalB = useMemo(() => offerB.reduce((s, e) => s + e.item.numericValue * e.qty, 0), [offerB]);
   const diff = totalA - totalB;
+
+  const vizA = useMemo(() => offerA.reduce((s, e) => s + e.item.vizValue * e.qty, 0), [offerA]);
+  const vizB = useMemo(() => offerB.reduce((s, e) => s + e.item.vizValue * e.qty, 0), [offerB]);
+  const vizDiff = vizA - vizB;
 
   const swap = () => {
     const a = offerA;
