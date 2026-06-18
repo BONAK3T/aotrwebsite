@@ -155,6 +155,7 @@ async function fetchSheet(spec: SheetSpec): Promise<Item[]> {
       taxGems,
       taxGold,
       numericValue: parseNumericValue(value),
+      vizValue: parseVizValue(value),
     });
   }
   return items;
