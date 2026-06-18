@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ValuesRouteImport } from './routes/values'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ChangesRouteImport } from './routes/changes'
+import { Route as CalculatorRouteImport } from './routes/calculator'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ItemIdRouteImport } from './routes/item.$id'
@@ -29,6 +30,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const ChangesRoute = ChangesRouteImport.update({
   id: '/changes',
   path: '/changes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalculatorRoute = CalculatorRouteImport.update({
+  id: '/calculator',
+  path: '/calculator',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -50,6 +56,7 @@ const ItemIdRoute = ItemIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/calculator': typeof CalculatorRoute
   '/changes': typeof ChangesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/values': typeof ValuesRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/calculator': typeof CalculatorRoute
   '/changes': typeof ChangesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/values': typeof ValuesRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/calculator': typeof CalculatorRoute
   '/changes': typeof ChangesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/values': typeof ValuesRoute
@@ -77,16 +86,25 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/calculator'
     | '/changes'
     | '/sitemap.xml'
     | '/values'
     | '/item/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/changes' | '/sitemap.xml' | '/values' | '/item/$id'
+  to:
+    | '/'
+    | '/about'
+    | '/calculator'
+    | '/changes'
+    | '/sitemap.xml'
+    | '/values'
+    | '/item/$id'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/calculator'
     | '/changes'
     | '/sitemap.xml'
     | '/values'
@@ -96,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  CalculatorRoute: typeof CalculatorRoute
   ChangesRoute: typeof ChangesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ValuesRoute: typeof ValuesRoute
@@ -125,6 +144,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChangesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/calculator': {
+      id: '/calculator'
+      path: '/calculator'
+      fullPath: '/calculator'
+      preLoaderRoute: typeof CalculatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -152,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  CalculatorRoute: CalculatorRoute,
   ChangesRoute: ChangesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ValuesRoute: ValuesRoute,
