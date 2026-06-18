@@ -18,6 +18,7 @@ export type Item = {
   taxGems: string;
   taxGold: string;
   numericValue: number; // best-effort numeric for sorting (keys)
+  vizValue: number;     // viz component extracted from value string
 };
 
 export type SheetSpec = { gid: string; category: string; label: string };
