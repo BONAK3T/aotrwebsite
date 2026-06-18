@@ -18,6 +18,7 @@ export type Item = {
   taxGems: string;
   taxGold: string;
   numericValue: number; // best-effort numeric for sorting (keys)
+  vizValue: number;     // viz component extracted from value string
 };
 
 export type SheetSpec = { gid: string; category: string; label: string };
@@ -95,6 +96,14 @@ function parseNumericValue(raw: string): number {
   return suf === "k" ? n * 1000 : suf === "m" ? n * 1_000_000 : n;
 }
 
+function parseVizValue(raw: string): number {
+  // handle patterns like "2.5viz" or "🔑2.25k/2.5viz"
+  const match = raw.match(/(\d+(?:\.\d+)?)\s*viz/i);
+  if (!match) return 0;
+  const n = parseFloat(match[1]);
+  return isNaN(n) ? 0 : n;
+}
+
 function normalizeTrend(s: string): Trend {
   const v = s.trim().toLowerCase();
   if (v.startsWith("ris")) return "Rising";
@@ -146,6 +155,7 @@ async function fetchSheet(spec: SheetSpec): Promise<Item[]> {
       taxGems,
       taxGold,
       numericValue: parseNumericValue(value),
+      vizValue: parseVizValue(value),
     });
   }
   return items;

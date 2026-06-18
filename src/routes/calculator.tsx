@@ -34,6 +34,11 @@ function formatValue(n: number) {
   return n.toLocaleString();
 }
 
+function formatViz(n: number) {
+  if (n === 0) return "—";
+  return `${n % 1 === 0 ? n : n.toFixed(2).replace(/\.?0+$/, "")}viz`;
+}
+
 function Calculator() {
   const { data } = useSuspenseQuery(itemsQuery);
   const [offerA, setOfferA] = useState<Entry[]>([]);
@@ -42,6 +47,10 @@ function Calculator() {
   const totalA = useMemo(() => offerA.reduce((s, e) => s + e.item.numericValue * e.qty, 0), [offerA]);
   const totalB = useMemo(() => offerB.reduce((s, e) => s + e.item.numericValue * e.qty, 0), [offerB]);
   const diff = totalA - totalB;
+
+  const vizA = useMemo(() => offerA.reduce((s, e) => s + e.item.vizValue * e.qty, 0), [offerA]);
+  const vizB = useMemo(() => offerB.reduce((s, e) => s + e.item.vizValue * e.qty, 0), [offerB]);
+  const vizDiff = vizA - vizB;
 
   const swap = () => {
     const a = offerA;
@@ -69,11 +78,15 @@ function Calculator() {
             <div>
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Your offer</div>
               <div className="font-display text-2xl text-gold">{formatValue(totalA)}</div>
+              <div className="mt-0.5 text-xs text-muted-foreground">{formatViz(vizA)}</div>
             </div>
             <div className="text-center">
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Difference</div>
               <div className={`font-display text-2xl ${diff > 0 ? "text-rising" : diff < 0 ? "text-dropping" : "text-foreground"}`}>
                 {diff === 0 ? "Even" : `${diff > 0 ? "+" : ""}${formatValue(diff)}`}
+              </div>
+              <div className="mt-0.5 text-xs text-muted-foreground">
+                {vizDiff === 0 ? "—" : `${vizDiff > 0 ? "+" : ""}${formatViz(vizDiff)}`}
               </div>
               <div className="mt-1 text-[10px] uppercase tracking-widest text-muted-foreground">
                 {diff === 0 ? "Fair trade" : diff > 0 ? "You're overpaying" : "You profit"}
@@ -82,6 +95,7 @@ function Calculator() {
             <div className="text-right">
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Their offer</div>
               <div className="font-display text-2xl text-gold">{formatValue(totalB)}</div>
+              <div className="mt-0.5 text-xs text-muted-foreground">{formatViz(vizB)}</div>
             </div>
           </div>
           <button
@@ -93,8 +107,8 @@ function Calculator() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          <OfferColumn title="Your Offer" tone="rising" items={data.items} entries={offerA} setEntries={setOfferA} total={totalA} />
-          <OfferColumn title="Their Offer" tone="dropping" items={data.items} entries={offerB} setEntries={setOfferB} total={totalB} />
+          <OfferColumn title="Your Offer" tone="rising" items={data.items} entries={offerA} setEntries={setOfferA} total={totalA} vizTotal={vizA} />
+          <OfferColumn title="Their Offer" tone="dropping" items={data.items} entries={offerB} setEntries={setOfferB} total={totalB} vizTotal={vizB} />
         </div>
       </div>
 
@@ -104,7 +118,7 @@ function Calculator() {
 }
 
 function OfferColumn({
-  title, tone, items, entries, setEntries, total,
+  title, tone, items, entries, setEntries, total, vizTotal,
 }: {
   title: string;
   tone: "rising" | "dropping";
@@ -112,6 +126,7 @@ function OfferColumn({
   entries: Entry[];
   setEntries: React.Dispatch<React.SetStateAction<Entry[]>>;
   total: number;
+  vizTotal: number;
 }) {
   const [q, setQ] = useState("");
   const results = useMemo(() => {
@@ -200,7 +215,7 @@ function OfferColumn({
                 <RarityBadge rarity={e.item.rarity} />
               </div>
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                {e.item.value} each
+                {e.item.value} each · {formatViz(e.item.vizValue * e.qty)}
               </div>
             </div>
             <input
@@ -222,7 +237,10 @@ function OfferColumn({
 
       <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
         <div className="text-xs uppercase tracking-widest text-muted-foreground">Total · {entries.length} item{entries.length === 1 ? "" : "s"}</div>
-        <div className="font-display text-2xl text-gold">{formatValue(total)}</div>
+        <div className="text-right">
+          <div className="font-display text-2xl text-gold">{formatValue(total)}</div>
+          <div className="text-xs text-muted-foreground">{formatViz(vizTotal)}</div>
+        </div>
       </div>
     </div>
   );
