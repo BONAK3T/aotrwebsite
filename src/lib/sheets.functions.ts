@@ -159,7 +159,13 @@ export type SheetSnapshot = {
 export const getAllItems = createServerFn({ method: "GET" }).handler(
   async (): Promise<SheetSnapshot> => {
     const all = await Promise.all(SHEETS.map(fetchSheet));
-    const items = all.flat();
+    const seen = new Set<string>();
+    const items: Item[] = [];
+    for (const it of all.flat()) {
+      if (seen.has(it.id)) continue;
+      seen.add(it.id);
+      items.push(it);
+    }
     return { fetchedAt: new Date().toISOString(), items };
   },
 );
