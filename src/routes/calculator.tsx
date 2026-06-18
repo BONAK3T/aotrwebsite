@@ -237,7 +237,10 @@ function OfferColumn({
 
       <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
         <div className="text-xs uppercase tracking-widest text-muted-foreground">Total · {entries.length} item{entries.length === 1 ? "" : "s"}</div>
-        <div className="font-display text-2xl text-gold">{formatValue(total)}</div>
+        <div className="text-right">
+          <div className="font-display text-2xl text-gold">{formatValue(total)}</div>
+          <div className="text-xs text-muted-foreground">{formatViz(vizTotal)}</div>
+        </div>
       </div>
     </div>
   );
