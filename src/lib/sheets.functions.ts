@@ -96,7 +96,7 @@ function parseNumericValue(raw: string): number {
 }
 
 function parseVizValue(raw: string): number {
-  const handle patterns like "2.5viz" or "🔑2.25k/2.5viz"
+  // handle patterns like "2.5viz" or "🔑2.25k/2.5viz"
   const match = raw.match(/(\d+(?:\.\d+)?)\s*viz/i);
   if (!match) return 0;
   const n = parseFloat(match[1]);
