@@ -95,6 +95,14 @@ function parseNumericValue(raw: string): number {
   return suf === "k" ? n * 1000 : suf === "m" ? n * 1_000_000 : n;
 }
 
+function parseVizValue(raw: string): number {
+  const handle patterns like "2.5viz" or "🔑2.25k/2.5viz"
+  const match = raw.match(/(\d+(?:\.\d+)?)\s*viz/i);
+  if (!match) return 0;
+  const n = parseFloat(match[1]);
+  return isNaN(n) ? 0 : n;
+}
+
 function normalizeTrend(s: string): Trend {
   const v = s.trim().toLowerCase();
   if (v.startsWith("ris")) return "Rising";
