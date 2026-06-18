@@ -215,7 +215,7 @@ function OfferColumn({
                 <RarityBadge rarity={e.item.rarity} />
               </div>
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                {e.item.value} each
+                {e.item.value} each · {formatViz(e.item.vizValue * e.qty)}
               </div>
             </div>
             <input
