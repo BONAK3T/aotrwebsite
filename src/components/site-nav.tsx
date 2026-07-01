@@ -74,7 +74,7 @@ export function SiteFooter({ fetchedAt }: { fetchedAt?: string }) {
           <div className="text-xs">Unofficial trading value centre · Not affiliated with the Attack on Titan Revolution developers.</div>
         </div>
         {fetchedAt && (
-          <div className="text-xs">Synced {new Date(fetchedAt).toLocaleString()}</div>
+          <div className="text-xs" suppressHydrationWarning>Synced {new Date(fetchedAt).toLocaleString()}</div>
         )}
       </div>
     </footer>
