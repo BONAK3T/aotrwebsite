@@ -110,6 +110,8 @@ function Calculator() {
           <OfferColumn title="Your Offer" tone="rising" items={data.items} entries={offerA} setEntries={setOfferA} total={totalA} vizTotal={vizA} />
           <OfferColumn title="Their Offer" tone="dropping" items={data.items} entries={offerB} setEntries={setOfferB} total={totalB} vizTotal={vizB} />
         </div>
+
+        <ScrollCalculator />
       </div>
 
       <SiteFooter fetchedAt={data.fetchedAt} />
@@ -240,6 +242,145 @@ function OfferColumn({
         <div className="text-right">
           <div className="font-display text-2xl text-gold">{formatValue(total)}</div>
           <div className="text-xs text-muted-foreground">{formatViz(vizTotal)}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+type ScrollRow = { uid: string; name: string; value: number; viz: number; qty: number };
+
+const DEFAULT_SCROLLS: Omit<ScrollRow, "uid" | "qty">[] = [
+  { name: "Family Scroll", value: 0, viz: 0 },
+  { name: "Rare Family Scroll", value: 0, viz: 0 },
+  { name: "Perk Scroll", value: 0, viz: 0 },
+  { name: "Titan Scroll", value: 0, viz: 0 },
+  { name: "Cosmetic Scroll", value: 0, viz: 0 },
+];
+
+function ScrollCalculator() {
+  const [rows, setRows] = useState<ScrollRow[]>(() =>
+    DEFAULT_SCROLLS.map((s, i) => ({ ...s, uid: `preset-${i}`, qty: 0 })),
+  );
+
+  const totalValue = useMemo(() => rows.reduce((s, r) => s + r.value * r.qty, 0), [rows]);
+  const totalViz = useMemo(() => rows.reduce((s, r) => s + r.viz * r.qty, 0), [rows]);
+  const totalCount = useMemo(() => rows.reduce((s, r) => s + r.qty, 0), [rows]);
+
+  const update = (uid: string, patch: Partial<ScrollRow>) =>
+    setRows((prev) => prev.map((r) => (r.uid === uid ? { ...r, ...patch } : r)));
+  const remove = (uid: string) => setRows((prev) => prev.filter((r) => r.uid !== uid));
+  const add = () =>
+    setRows((prev) => [
+      ...prev,
+      { uid: `custom-${Date.now()}`, name: "Custom Scroll", value: 0, viz: 0, qty: 0 },
+    ]);
+  const reset = () =>
+    setRows((prev) => prev.map((r) => ({ ...r, qty: 0 })));
+
+  return (
+    <div className="mt-8 rounded-xl border border-border bg-card p-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <div className="text-[10px] uppercase tracking-widest text-gold">Scroll Calculator</div>
+          <h2 className="mt-1 font-display text-2xl text-foreground">Total Scroll Value</h2>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Set the value per scroll and the amount you have. Totals update instantly.
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={reset}
+            className="text-xs font-semibold uppercase tracking-widest text-muted-foreground hover:text-foreground"
+          >
+            Reset qty
+          </button>
+          <button
+            onClick={add}
+            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-3 py-2 text-xs font-semibold uppercase tracking-widest text-foreground hover:border-primary"
+          >
+            <Plus className="h-3.5 w-3.5" /> Add scroll
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-5 overflow-x-auto">
+        <table className="w-full min-w-[640px] text-sm">
+          <thead>
+            <tr className="text-[10px] uppercase tracking-widest text-muted-foreground">
+              <th className="pb-2 text-left font-semibold">Scroll</th>
+              <th className="pb-2 text-right font-semibold">Value (keys)</th>
+              <th className="pb-2 text-right font-semibold">Viz</th>
+              <th className="pb-2 text-right font-semibold">Qty</th>
+              <th className="pb-2 text-right font-semibold">Subtotal</th>
+              <th className="pb-2" />
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.uid} className="border-t border-border/60">
+                <td className="py-2 pr-2">
+                  <input
+                    value={r.name}
+                    onChange={(e) => update(r.uid, { name: e.target.value })}
+                    className="w-full rounded border border-transparent bg-transparent px-2 py-1 text-foreground hover:border-border focus:border-primary focus:outline-none"
+                  />
+                </td>
+                <td className="py-2 pr-2">
+                  <input
+                    type="number"
+                    min={0}
+                    step="0.01"
+                    value={r.value}
+                    onChange={(e) => update(r.uid, { value: parseFloat(e.target.value) || 0 })}
+                    className="w-24 rounded border border-border bg-background px-2 py-1 text-right text-foreground focus:border-primary focus:outline-none"
+                  />
+                </td>
+                <td className="py-2 pr-2">
+                  <input
+                    type="number"
+                    min={0}
+                    step="0.01"
+                    value={r.viz}
+                    onChange={(e) => update(r.uid, { viz: parseFloat(e.target.value) || 0 })}
+                    className="w-20 rounded border border-border bg-background px-2 py-1 text-right text-foreground focus:border-primary focus:outline-none"
+                  />
+                </td>
+                <td className="py-2 pr-2">
+                  <input
+                    type="number"
+                    min={0}
+                    value={r.qty}
+                    onChange={(e) => update(r.uid, { qty: parseInt(e.target.value) || 0 })}
+                    className="w-20 rounded border border-border bg-background px-2 py-1 text-right text-foreground focus:border-primary focus:outline-none"
+                  />
+                </td>
+                <td className="py-2 pr-2 text-right font-mono text-gold">
+                  <div>{formatValue(r.value * r.qty)}</div>
+                  <div className="text-[10px] text-muted-foreground">{formatViz(r.viz * r.qty)}</div>
+                </td>
+                <td className="py-2 text-right">
+                  <button
+                    onClick={() => remove(r.uid)}
+                    className="rounded p-1 text-muted-foreground hover:text-destructive"
+                    aria-label="Remove scroll"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
+        <div className="text-xs uppercase tracking-widest text-muted-foreground">
+          Total · {totalCount} scroll{totalCount === 1 ? "" : "s"}
+        </div>
+        <div className="text-right">
+          <div className="font-display text-2xl text-gold">{formatValue(totalValue)}</div>
+          <div className="text-xs text-muted-foreground">{formatViz(totalViz)}</div>
         </div>
       </div>
     </div>
