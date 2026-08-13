@@ -82,7 +82,7 @@ function Values() {
             <button
               key={c}
               onClick={() => setActiveCat(c)}
-              className={`rounded-md border px-3 py-2 text-xs font-semibold uppercase tracking-widest transition ${
+              className={`fx-btn rounded-md border px-3 py-2 text-xs font-semibold uppercase tracking-widest transition ${
                 activeCat === c
                   ? "border-primary bg-primary/10 text-foreground"
                   : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
