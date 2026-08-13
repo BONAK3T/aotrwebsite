@@ -27,7 +27,7 @@ export const Route = createFileRoute("/item/$id")({
       <div className="mx-auto max-w-3xl px-4 py-24 text-center">
         <h1 className="font-display text-4xl text-foreground">Item not found</h1>
         <p className="mt-2 text-muted-foreground">This item isn't in the value list.</p>
-        <Link to="/values" className="mt-6 inline-block rounded-md bg-primary px-4 py-2 text-sm font-semibold uppercase tracking-widest text-primary-foreground">Browse values</Link>
+        <Link to="/values" className="fx-btn mt-6 inline-block rounded-md bg-primary px-4 py-2 text-sm font-semibold uppercase tracking-widest text-primary-foreground">Browse values</Link>
       </div>
     </div>
   ),
@@ -105,7 +105,7 @@ function ItemDetail() {
                   navigator.clipboard?.writeText(window.location.href);
                 }
               }}
-              className="mt-6 inline-flex items-center gap-2 rounded-md border border-border bg-card px-4 py-2 text-sm font-semibold uppercase tracking-widest text-foreground hover:border-primary/60 hover:bg-accent"
+              className="fx-btn mt-6 inline-flex items-center gap-2 rounded-md border border-border bg-card px-4 py-2 text-sm font-semibold uppercase tracking-widest text-foreground hover:border-primary/60 hover:bg-accent"
             >
               <Share2 className="h-4 w-4" /> Share value
             </button>

@@ -73,8 +73,9 @@ function Home() {
         <div className="absolute inset-0 wings-bg" aria-hidden />
         <div className="relative mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
           <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-gold">
-            <span className="h-1.5 w-1.5 rounded-full bg-gold" /> Live · Synced {new Date(data.fetchedAt).toLocaleString()}
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-gold" /> Live · Synced <span suppressHydrationWarning>{new Date(data.fetchedAt).toLocaleString()}</span>
           </div>
+
           <h1 className="mt-6 font-display text-5xl leading-[0.95] text-foreground md:text-7xl">
             Attack on Titan <span className="text-gold">Revolution</span><br />
             Trading Value Centre

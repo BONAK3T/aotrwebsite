@@ -100,7 +100,7 @@ function Calculator() {
           </div>
           <button
             onClick={swap}
-            className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-xs font-semibold uppercase tracking-widest text-foreground hover:border-primary"
+            className="fx-btn inline-flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-xs font-semibold uppercase tracking-widest text-foreground hover:border-primary"
           >
             <ArrowLeftRight className="h-4 w-4" /> Swap
           </button>
@@ -297,7 +297,7 @@ function ScrollCalculator() {
           </button>
           <button
             onClick={add}
-            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-3 py-2 text-xs font-semibold uppercase tracking-widest text-foreground hover:border-primary"
+            className="fx-btn inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-3 py-2 text-xs font-semibold uppercase tracking-widest text-foreground hover:border-primary"
           >
             <Plus className="h-3.5 w-3.5" /> Add scroll
           </button>
