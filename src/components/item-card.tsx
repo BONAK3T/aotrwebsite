@@ -62,7 +62,7 @@ export function ItemCard({ item }: { item: Item }) {
     <Link
       to="/item/$id"
       params={{ id: item.id }}
-      className="group relative flex flex-col gap-3 overflow-hidden rounded-lg border border-border bg-card p-4 transition hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_0_0_1px_var(--color-primary)]"
+      className="fx-btn group relative flex flex-col gap-3 overflow-hidden rounded-lg border border-border bg-card p-4 transition hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_0_0_1px_var(--color-primary)]"
     >
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">

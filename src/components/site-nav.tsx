@@ -29,7 +29,7 @@ export function SiteNav() {
             <Link
               key={l.to}
               to={l.to}
-              className="rounded px-3 py-2 text-sm font-medium uppercase tracking-wider text-muted-foreground transition hover:bg-accent hover:text-foreground [&.active]:bg-accent [&.active]:text-foreground"
+              className="fx-btn rounded px-3 py-2 text-sm font-medium uppercase tracking-wider text-muted-foreground transition hover:bg-accent hover:text-foreground [&.active]:bg-accent [&.active]:text-foreground"
               activeOptions={{ exact: l.to === "/" }}
             >
               {l.label}
