@@ -1,0 +1,175 @@
+{
+  "version": 1,
+  "sdk_version": "0.26.2",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "aot-r-values",
+      "version": "0.1.0",
+      "title": "AOT:R Values"
+    },
+    "tools": [
+      {
+        "name": "search_items",
+        "title": "Search trading items",
+        "description": "Search Attack on Titan Revolution trading items by name, category, section or rarity, and return their current community values.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Text to match against item name, section or category."
+            },
+            "limit": {
+              "default": 10,
+              "description": "Maximum number of results.",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          },
+          "required": [
+            "query"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_item_value",
+        "title": "Get item value",
+        "description": "Get the full value details (value, viz, demand, rarity, trend, taxes) for one item by its exact name or id.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "item": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Item name or item id, e.g. 'Attack Titan'."
+            }
+          },
+          "required": [
+            "item"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_trends",
+        "title": "List rising or dropping items",
+        "description": "List the highest-value items whose community value is currently rising, dropping or stable.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "trend": {
+              "type": "string",
+              "enum": [
+                "Rising",
+                "Dropping",
+                "Stable"
+              ],
+              "description": "Which trend to list."
+            },
+            "limit": {
+              "default": 10,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          },
+          "required": [
+            "trend"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "compare_trade",
+        "title": "Compare a trade",
+        "description": "Sum the value of two sides of a trade (in keys and viz) and report which side wins and by how much.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "your_offer": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "item": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Item name or id."
+                  },
+                  "quantity": {
+                    "default": 1,
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "item"
+                ]
+              },
+              "description": "Items offered on this side of the trade."
+            },
+            "their_offer": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "item": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Item name or id."
+                  },
+                  "quantity": {
+                    "default": 1,
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "item"
+                ]
+              },
+              "description": "Items offered on this side of the trade."
+            }
+          },
+          "required": [
+            "your_offer",
+            "their_offer"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}

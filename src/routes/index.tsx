@@ -2,7 +2,8 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { Search, TrendingUp, TrendingDown, Activity, Boxes } from "lucide-react";
 import { useMemo, useState } from "react";
-import { getAllItems, CATEGORY_LABELS } from "@/lib/sheets.functions";
+import { getAllItems } from "@/lib/sheets.functions";
+import { CATEGORY_LABELS } from "@/lib/sheets-data";
 import { SiteNav, SiteFooter } from "@/components/site-nav";
 import { ItemCard } from "@/components/item-card";
 

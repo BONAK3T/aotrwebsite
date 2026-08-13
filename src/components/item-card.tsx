@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowDown, ArrowRight, ArrowUp } from "lucide-react";
-import type { Item, Trend } from "@/lib/sheets.functions";
+import type { Item, Trend } from "@/lib/sheets-data";
 
 const RARITY_CLASS: Record<string, string> = {
   Common: "border-rarity-common/40 text-rarity-common",
