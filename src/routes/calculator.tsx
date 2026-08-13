@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { Plus, Search, Trash2, ArrowLeftRight } from "lucide-react";
-import { getAllItems, CATEGORY_LABELS, type Item } from "@/lib/sheets.functions";
+import { getAllItems } from "@/lib/sheets.functions";
+import { CATEGORY_LABELS, type Item } from "@/lib/sheets-data";
 import { SiteNav, SiteFooter } from "@/components/site-nav";
 import { RarityBadge } from "@/components/item-card";
 

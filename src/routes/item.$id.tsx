@@ -1,7 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowLeft, Share2 } from "lucide-react";
-import { getAllItems, CATEGORY_LABELS } from "@/lib/sheets.functions";
+import { getAllItems } from "@/lib/sheets.functions";
+import { CATEGORY_LABELS } from "@/lib/sheets-data";
 import { SiteNav, SiteFooter } from "@/components/site-nav";
 import { ItemCard, RarityBadge, TrendBadge } from "@/components/item-card";
 
