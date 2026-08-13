@@ -94,8 +94,12 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <div className="aurora-bg" aria-hidden>
+          <div className="scanlines" />
+        </div>
         {children}
         <Scripts />
+
       </body>
     </html>
   );
